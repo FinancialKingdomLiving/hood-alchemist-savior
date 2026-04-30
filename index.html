@@ -1,85 +1,42 @@
 <!doctype html>
-<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
 <title>Hood Alchemist Savior</title>
-
- <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script src="config.js"></script>
 <style>
 :root{--black:#05090b;--panel:#0d1512;--gold:#c9a34a;--green:#3f6b45;--cream:#f4ead8;--muted:#c9c2b2;--line:rgba(244,234,216,.16)}
 *{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;background:radial-gradient(circle at top left,#17251d,#05090b 46%);color:var(--cream);font-family:Arial,Helvetica,sans-serif;line-height:1.55}a{color:inherit}
-header{position:sticky;top:0;z-index:50;display:flex;align-items:center;justify-content:space-between;padding:14px 5vw;background:rgba(5,9,11,.9);border-bottom:1px solid var(--line)}.brand{display:flex;gap:10px;align-items:center;text-decoration:none;font-weight:900}.mark{background:var(--gold);color:#111;padding:8px 10px;border-radius:12px}nav{display:flex;gap:18px}nav a{text-decoration:none;color:var(--muted);font-weight:800}.hero{min-height:86vh;display:grid;grid-template-columns:1.15fr .85fr;gap:30px;align-items:center;padding:75px 5vw;background:linear-gradient(120deg,rgba(0,0,0,.62),rgba(63,107,69,.24)),url('https://images.unsplash.com/photo-1464226184884-fa280b87c399?auto=format&fit=crop&w=1600&q=80') center/cover}
-.eyebrow{color:var(--gold);font-weight:900;text-transform:uppercase;letter-spacing:.13em;font-size:.82rem}h1{font-size:clamp(2.45rem,6vw,5.7rem);line-height:.95;margin:0 0 18px}h2{font-size:clamp(1.8rem,3vw,3.1rem);line-height:1.05;margin:0 0 14px}h3{margin-top:0;color:var(--gold)}.lead{font-size:1.18rem;max-width:760px;color:#efe3ca}.actions{display:flex;flex-wrap:wrap;gap:12px;margin-top:25px}.btn{display:inline-block;border:1px solid var(--line);border-radius:999px;padding:13px 18px;text-decoration:none;font-weight:900;cursor:pointer}.gold{background:var(--gold);color:#120f08}.ghost{background:rgba(244,234,216,.08)}.dark{background:#090d0b}
-.card,.panel,.learn article,.product,.herb{background:rgba(13,21,18,.92);border:1px solid var(--line);border-radius:24px;padding:24px;box-shadow:0 22px 70px rgba(0,0,0,.25)}.section{padding:70px 5vw}.head{display:flex;justify-content:space-between;gap:20px;align-items:end}.stats{text-align:right;color:var(--muted)}.grid4,.learn,.shop{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin-top:24px}.grid4 button{background:linear-gradient(135deg,var(--green),#17251d);color:var(--cream);border:1px solid var(--line);padding:20px;border-radius:18px;font-weight:900;cursor:pointer;text-align:left}.tools{display:flex;gap:12px;margin:24px 0}input,select,textarea{width:100%;border:1px solid var(--line);border-radius:14px;padding:14px;background:#09100d;color:var(--cream)}select option{background:#09100d}.herbs{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}.tag{display:inline-block;background:rgba(201,163,74,.16);color:var(--gold);border:1px solid rgba(201,163,74,.28);border-radius:999px;padding:5px 9px;font-size:.8rem;font-weight:900}.small{color:var(--muted);font-size:.92rem}form{max-width:760px;display:grid;gap:16px}label{font-weight:900}footer{padding:30px 5vw;border-top:1px solid var(--line);background:#050806}.fine{color:var(--muted);font-size:.9rem}
-@media(max-width:900px){.hero,.head{display:block}.grid4,.learn,.shop,.herbs{grid-template-columns:1fr 1fr}.stats{text-align:left}nav{gap:8px;font-size:.85rem}}
-@media(max-width:560px){.grid4,.learn,.shop,.herbs{grid-template-columns:1fr}h1{font-size:2.65rem}}
-</style></head>
+header{position:sticky;top:0;z-index:50;display:flex;align-items:center;justify-content:space-between;padding:14px 5vw;background:rgba(5,9,11,.92);border-bottom:1px solid var(--line)}.brand{display:flex;gap:10px;align-items:center;text-decoration:none;font-weight:900}.mark{background:var(--gold);color:#111;padding:8px 10px;border-radius:12px}nav{display:flex;gap:18px;flex-wrap:wrap}nav a{text-decoration:none;color:var(--muted);font-weight:800}.hero{min-height:86vh;display:grid;grid-template-columns:1.15fr .85fr;gap:30px;align-items:center;padding:75px 5vw;background:linear-gradient(120deg,rgba(0,0,0,.66),rgba(63,107,69,.25)),url('https://images.unsplash.com/photo-1464226184884-fa280b87c399?auto=format&fit=crop&w=1600&q=80') center/cover}
+.eyebrow{color:var(--gold);font-weight:900;text-transform:uppercase;letter-spacing:.13em;font-size:.82rem}h1{font-size:clamp(2.45rem,6vw,5.7rem);line-height:.95;margin:0 0 18px}h2{font-size:clamp(1.8rem,3vw,3.1rem);line-height:1.05;margin:0 0 14px}h3{margin-top:0;color:var(--gold)}.lead{font-size:1.18rem;max-width:760px;color:#efe3ca}.actions{display:flex;flex-wrap:wrap;gap:12px;margin-top:25px}.btn{display:inline-block;border:1px solid var(--line);border-radius:999px;padding:13px 18px;text-decoration:none;font-weight:900;cursor:pointer}.gold{background:var(--gold);color:#120f08}.ghost{background:rgba(244,234,216,.08)}.dark{background:#090d0b}.card,.panel,.learn article,.product,.herb{background:rgba(13,21,18,.92);border:1px solid var(--line);border-radius:24px;padding:24px;box-shadow:0 22px 70px rgba(0,0,0,.25)}.section{padding:70px 5vw}.head{display:flex;justify-content:space-between;gap:20px;align-items:end}.stats{text-align:right;color:var(--muted)}.grid4,.learn,.shop{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin-top:24px}.grid4 button{background:linear-gradient(135deg,var(--green),#17251d);color:var(--cream);border:1px solid var(--line);padding:20px;border-radius:18px;font-weight:900;cursor:pointer;text-align:left}.tools{display:flex;gap:12px;margin:24px 0}input,select,textarea{width:100%;border:1px solid var(--line);border-radius:14px;padding:14px;background:#09100d;color:var(--cream)}select option{background:#09100d}.herbs{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}.tag{display:inline-block;background:rgba(201,163,74,.16);color:var(--gold);border:1px solid rgba(201,163,74,.28);border-radius:999px;padding:5px 9px;font-size:.8rem;font-weight:900;margin:2px}.small,.status{color:var(--muted);font-size:.92rem}form{max-width:760px;display:grid;gap:16px}label{font-weight:900}footer{padding:30px 5vw;border-top:1px solid var(--line);background:#050806}.fine{color:var(--muted);font-size:.9rem}.error{color:#ffb0a0}.success{color:#a6f0b6}
+@media(max-width:900px){.hero,.head{display:block}.grid4,.learn,.shop,.herbs{grid-template-columns:1fr 1fr}.stats{text-align:left}}
+@media(max-width:560px){.grid4,.learn,.shop,.herbs{grid-template-columns:1fr}.tools{display:block}.tools>*{margin-bottom:10px}h1{font-size:2.65rem}}
+</style>
+</head>
 <body>
 <header><a class="brand" href="#home"><span class="mark">HAS</span><span>Hood Alchemist Savior</span></a><nav><a href="#home">Home</a><a href="#start">Start</a><a href="#library">Herbs</a><a href="#learn">Learn</a><a href="#shop">Shop</a><a href="#ask">Order</a></nav></header>
 <main id="home">
-<section class="hero"><div><p class="eyebrow">Herbal knowledge for the people</p><h1>Master the herbs. Heal with wisdom. Build your own herbal cabinet.</h1><p class="lead">A premium herbal learning system for everyday people, serious students, product creators, and future apothecary owners.</p><div class="actions"><a class="btn gold" href="#library">Explore 200+ Herbs</a><a class="btn ghost" href="#shop">Buy Herbs</a><a class="btn dark" href="#ask">Ask A Question</a></div></div><div class="card"><p class="eyebrow">Featured lane</p><h2>Burdock Root</h2><p>Deep cleansing root used in skin, liver, lymph, and blood-building formulas.</p><span class="tag">Decoction</span> <span class="tag">Tincture</span> <span class="tag">Blend</span></div></section>
-<section class="section" id="start"><p class="eyebrow">Start here</p><h2>Match the need to the herb lane</h2><div class="grid4"><button data-cat="Detox">Blood • Lymph • Skin</button><button data-cat="Digestive">Gut • Bloating • Bitters</button><button data-cat="Stress">Stress • Sleep • Nerves</button><button data-cat="Respiratory">Cough • Lung • Throat</button><button data-cat="Immune">Immune Support</button><button data-cat="Men">Men’s Health</button><button data-cat="Women">Women’s Health</button><button data-cat="Energy">Energy • Stamina</button></div></section>
-<section class="section panel" id="library"><div class="head"><div><p class="eyebrow">Herb vault</p><h2>Search the herbal library</h2><p>Search by herb, benefit, preparation, or category.</p></div><div class="stats"><strong id="total">0</strong> Total Herbs<br><strong id="showing">0</strong> Showing Now</div></div><div class="tools"><input id="search" placeholder="Search herbs..." type="search"><select id="cat"><option>All</option></select><button class="btn ghost" id="reset">Reset</button></div><div id="herbGrid" class="herbs"></div></section>
+<section class="hero"><div><p class="eyebrow">Herbal knowledge for the people</p><h1>Master the herbs. Heal with wisdom. Build your own herbal cabinet.</h1><p class="lead">A premium herbal learning system powered by Supabase. Search your herb database, learn preparation methods, request herbs, and build Hood Alchemist Savior into a real apothecary platform.</p><div class="actions"><a class="btn gold" href="#library">Explore Herbs</a><a class="btn ghost" href="#shop">Buy Herbs</a><a class="btn dark" href="#ask">Ask A Question</a></div><p id="status" class="status">Loading herbs from Supabase...</p></div><div class="card"><p class="eyebrow">Database mode</p><h2>Supabase Connected</h2><p>This version pulls directly from your <strong>Herbs</strong> table.</p><span class="tag">GitHub</span><span class="tag">Netlify</span><span class="tag">Supabase</span></div></section>
+<section class="section" id="start"><p class="eyebrow">Start here</p><h2>Choose the lane your people need</h2><div class="grid4"><button data-cat="Detox">Blood • Lymph • Skin</button><button data-cat="Digestive">Gut • Bloating • Bitters</button><button data-cat="Stress">Stress • Sleep • Nerves</button><button data-cat="Respiratory">Cough • Lung • Throat</button><button data-cat="Immune">Immune Support</button><button data-cat="Men">Men’s Health</button><button data-cat="Women">Women’s Health</button><button data-cat="Energy">Energy • Stamina</button></div></section>
+<section class="section panel" id="library"><div class="head"><div><p class="eyebrow">Live herb vault</p><h2>Search the herb library</h2><p>This library pulls from your Supabase <strong>Herbs</strong> table.</p></div><div class="stats"><strong id="total">0</strong> Total Herbs<br><strong id="showing">0</strong> Showing Now</div></div><div class="tools"><input id="search" placeholder="Search herbs, benefits, category..." type="search"><select id="cat"><option value="All">All</option></select><button class="btn ghost" id="reset" type="button">Reset</button></div><div id="herbGrid" class="herbs"></div></section>
+<section class="section" id="learn"><p class="eyebrow">Learning hub</p><h2>Teach herbs clean and correctly</h2><div class="learn"><article><h3>Infusion</h3><p>Hot water over leaves and flowers. Cover while steeping so the good compounds stay in the cup.</p></article><article><h3>Decoction</h3><p>Slow simmer roots, barks, seeds, and tough plant material.</p></article><article><h3>Tincture</h3><p>Concentrated extract. Stronger, shelf-stable, and needs careful labeling.</p></article><article><h3>Salve</h3><p>Oil-infused herbs thickened with wax or butter for topical use.</p></article></div></section>
+<section class="section panel" id="shop"><p class="eyebrow">Apothecary shop</p><h2>Shop-ready product lanes</h2><div class="shop"><article class="product"><h3>Raw Herb Request</h3><p>Loose herbs for tea, decoction, or formulas.</p><a class="btn gold productBtn" href="#ask" data-product="Raw Herb Request">Request Herbs</a></article><article class="product"><h3>Full Body Reset Blend</h3><p>Burdock, dandelion, cleavers, red clover style support.</p><a class="btn gold productBtn" href="#ask" data-product="Full Body Reset Blend">Ask To Buy</a></article><article class="product"><h3>Calm Crown Nervine Blend</h3><p>Lemon balm, skullcap, passionflower style support.</p><a class="btn gold productBtn" href="#ask" data-product="Calm Crown Nervine Blend">Ask To Buy</a></article><article class="product"><h3>Lung & Throat Support</h3><p>Mullein, thyme, marshmallow, elderflower style support.</p><a class="btn gold productBtn" href="#ask" data-product="Lung & Throat Support">Ask To Buy</a></article></div></section>
+<section class="section" id="ask"><p class="eyebrow">Order / consultation</p><h2>Need herbs or help choosing a lane?</h2><form id="questionForm"><label>Name <input name="name" required></label><label>Email <input type="email" name="email" required></label><label>Phone <input name="phone"></label><label>Interest<select name="interest"><option>Raw herbs</option><option>Tea blend</option><option>Tincture</option><option>Salve / rub</option><option>Consultation</option></select></label><label>Message <textarea id="message" name="message" rows="6" required></textarea></label><button class="btn gold" type="submit">Send Request</button><p id="formStatus" class="status"></p></form></section>
+</main>
+<footer><p><strong>Hood Alchemist Savior</strong></p><p class="fine">Educational herbal content only. Not medical advice. Consult a qualified healthcare professional when needed.</p></footer>
 <script>
-const $ = (s) => document.querySelector(s);
-let HERBS = [];
-let active = "All";
-
-<script>
-const supa = supabase.createClient(
-  window.SUPABASE_URL,
-  window.SUPABASE_ANON_KEY
-);
-
-async function loadHerbs() {
-  const { data, error } = await supa.from("Herbs").select("*");
-
-  if (error) {
-    console.error(error);
-    return;
-  }
-
-  const grid = document.querySelector("#herbGrid");
-
-  grid.innerHTML = data.map(h => `
-    <div class="herb">
-      <h3>${h.name}</h3>
-      <p>${h.category}</p>
-      <p>${h.benefits}</p>
-    </div>
-  `).join("");
-}
-
-document.addEventListener("DOMContentLoaded", loadHerbs);
-</script>    .order("name", { ascending: true });
-
-  if (error) {
-    document.querySelector("#herbGrid").innerHTML =
-      `<p>Supabase error: ${esc(error.message)}</p>`;
-    console.error(error);
-    return;
-  }
-
-  HERBS = data || [];
-  render();
-}
-
-function render() {
-  const q = ($("#search")?.value || "").toLowerCase();
-
-  const rows = HERBS.filter(h => {
-    const text = Object.values(h).join(" ").toLowerCase();
-    return (active === "All" || h.category === active) &&
-           (!q || text.includes(q));
-  });
-
-  $("#herbGrid").innerHTML = rows.map(h => `
-    <div class="herb">
-      <h3>${esc(h.name)}</h3>
-      <p><strong>Category:</strong> ${esc(h.category)}</p>
-      <p><strong>Benefits:</strong> ${esc(h.benefits)}</p>
-    </div>
-  `).join("");
-}
-
-document.addEventListener("DOMContentLoaded", loadHerbs);
-</script></script></body></html>
+const $=s=>document.querySelector(s);let HERBS=[];let active="All";const TABLE_NAME="Herbs";
+function esc(v){return String(v??"").replace(/[&<>"']/g,m=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[m]));}
+function setStatus(msg,type=""){const el=$("#status");if(el){el.textContent=msg;el.className="status "+type;}}
+function getClient(){if(!window.SUPABASE_URL||!window.SUPABASE_ANON_KEY){setStatus("Missing config.js values. Check config.js.","error");return null;}return supabase.createClient(window.SUPABASE_URL,window.SUPABASE_ANON_KEY);}
+async function loadHerbs(){const supa=getClient();if(!supa)return;setStatus("Connecting to Supabase...");const {data,error}=await supa.from(TABLE_NAME).select("*").order("name",{ascending:true});if(error){console.error("Supabase error:",error);$("#herbGrid").innerHTML=`<article class="herb"><h3>Supabase Error</h3><p>${esc(error.message)}</p><p class="small">Check table name, policy, and config.js.</p></article>`;setStatus("Supabase error. Check table name/policy/config.","error");return;}HERBS=data||[];buildCategories();render();setStatus("Connected. Loaded "+HERBS.length+" herbs.","success");}
+function buildCategories(){const select=$("#cat");select.innerHTML=`<option value="All">All</option>`;[...new Set(HERBS.map(h=>h.category).filter(Boolean))].sort().forEach(c=>{const opt=document.createElement("option");opt.value=c;opt.textContent=c;select.appendChild(opt);});$("#total").textContent=HERBS.length;}
+function render(){const q=($("#search")?.value||"").toLowerCase().trim();const rows=HERBS.filter(h=>{const text=Object.values(h).join(" ").toLowerCase();return(active==="All"||h.category===active)&&(!q||text.includes(q));});$("#showing").textContent=rows.length;$("#herbGrid").innerHTML=rows.map(h=>`<article class="herb"><span class="tag">${esc(h.category)}</span><h3>${esc(h.name)}</h3><p class="small"><strong>Part/type:</strong> ${esc(h.part_used)}</p><p>${esc(h.benefits)}</p><details><summary>Open full herb notes</summary><p><strong>Preparation:</strong> ${esc(h.preparation)}</p><p><strong>Pairs well with:</strong> ${esc(h.pairs_with)}</p><p class="small"><strong>Caution:</strong> ${esc(h.caution)}</p><button class="btn gold" type="button" onclick='askHerb(${JSON.stringify(h.name)})'>Ask about ${esc(h.name)}</button></details></article>`).join("");}
+function askHerb(name){$("#message").value="I want to ask about "+name+".";location.hash="ask";}
+async function submitQuestion(e){e.preventDefault();const supa=getClient();const formStatus=$("#formStatus");if(!supa){formStatus.textContent="Supabase is not connected.";formStatus.className="status error";return;}const fd=new FormData(e.target);const payload={name:fd.get("name"),email:fd.get("email"),phone:fd.get("phone"),interest:fd.get("interest"),message:fd.get("message")};const {error}=await supa.from("questions").insert(payload);if(error){formStatus.textContent="Request failed: "+error.message;formStatus.className="status error";return;}formStatus.textContent="Request sent. Check Supabase questions table.";formStatus.className="status success";e.target.reset();}
+document.addEventListener("DOMContentLoaded",()=>{$("#search").addEventListener("input",render);$("#cat").addEventListener("change",e=>{active=e.target.value;render();});$("#reset").addEventListener("click",()=>{$("#search").value="";$("#cat").value="All";active="All";render();});document.querySelectorAll("[data-cat]").forEach(btn=>btn.addEventListener("click",()=>{active=btn.dataset.cat;$("#cat").value=active;location.hash="library";render();}));document.querySelectorAll(".productBtn").forEach(btn=>btn.addEventListener("click",()=>{$("#message").value="I am interested in: "+btn.dataset.product+". Please send details.";}));$("#questionForm").addEventListener("submit",submitQuestion);loadHerbs();});
+</script>
+</body>
+</html>

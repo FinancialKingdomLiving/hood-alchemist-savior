@@ -24,22 +24,33 @@ const $ = (s) => document.querySelector(s);
 let HERBS = [];
 let active = "All";
 
-const sb = supabase.createClient(
+<script>
+const supa = supabase.createClient(
   window.SUPABASE_URL,
   window.SUPABASE_ANON_KEY
 );
 
-function esc(v) {
-  return String(v ?? "").replace(/[&<>"']/g, m => ({
-    "&":"&amp;", "<":"&lt;", ">":"&gt;", '"':"&quot;", "'":"&#39;"
-  }[m]));
+async function loadHerbs() {
+  const { data, error } = await supa.from("Herbs").select("*");
+
+  if (error) {
+    console.error(error);
+    return;
+  }
+
+  const grid = document.querySelector("#herbGrid");
+
+  grid.innerHTML = data.map(h => `
+    <div class="herb">
+      <h3>${h.name}</h3>
+      <p>${h.category}</p>
+      <p>${h.benefits}</p>
+    </div>
+  `).join("");
 }
 
-async function loadHerbs() {
-  const { data, error } = await sb
-    .from("Herbs")
-    .select("*")
-    .order("name", { ascending: true });
+document.addEventListener("DOMContentLoaded", loadHerbs);
+</script>    .order("name", { ascending: true });
 
   if (error) {
     document.querySelector("#herbGrid").innerHTML =

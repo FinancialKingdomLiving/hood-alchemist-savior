@@ -104,7 +104,13 @@ function setStatus(message, type = "") {
 
 async function loadHerbs() {
   setStatus("Connecting to Supabase...");
-  const { data, error } = await supa.from(TABLE_NAME).select("*").order("name", { ascending: true });
+  const { data, error } = await supa
+    .from("herbs_300")
+    .select("*")
+    .order("name", { ascending: true });
+
+  console.log("HERBS DATA:", data);
+  console.log("HERBS ERROR:", error);
 
   if (error) {
     console.error("Supabase error:", error);
@@ -116,6 +122,11 @@ async function loadHerbs() {
   HERBS = data || [];
   buildCategories();
   renderHerbs();
+  if (HERBS.length === 0) {
+    setStatus("Connected, but Supabase returned 0 herbs. Check the table name and RLS policy.", "error");
+    $("#herbGrid").innerHTML = `<article class="herb"><h3>No herbs returned</h3><p>The site connected, but Supabase returned zero rows from herbs_300.</p></article>`;
+    return;
+  }
   setStatus("Connected. Loaded " + HERBS.length + " herbs.", "success");
 }
 

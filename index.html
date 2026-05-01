@@ -45,8 +45,8 @@ form{max-width:850px;display:grid;gap:16px}label{font-weight:900;color:#f2dfbd}f
 const SUPABASE_URL="https://bhjscvvoncakmtekwtyw.supabase.co";const SUPABASE_KEY="sb_publishable_QRd-mc4YEI9o_haMP9s6bg_YSP96CrC";const TABLE_NAME="herbs_300";const $=s=>document.querySelector(s);let HERBS=[];let activeCategory="All";let activePart="All";const supa=window.supabase.createClient(SUPABASE_URL,SUPABASE_KEY);
 function esc(v){return String(v??"").replace(/[&<>"']/g,m=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[m]));}
 function getHerbImage(name){
-  const query = encodeURIComponent((name || "herbal plant") + " herb plant");
-  return "https://source.unsplash.com/600x420/?" + query;
+  const seed = encodeURIComponent(name || "herb");
+  return "https://picsum.photos/seed/" + seed + "/600/420";
 }
 function setStatus(msg,type=""){const el=$("#status");if(el){el.textContent=msg;el.className="status "+type;}}
 async function loadHerbs(){setStatus("Connecting to Supabase...");const {data,error}=await supa.from("herbs_300").select("*").order("name",{ascending:true});if(error){console.error(error);$("#herbGrid").innerHTML=`<article class="herb empty"><h3>Supabase Error</h3><p>${esc(error.message)}</p></article>`;setStatus("Supabase error.","error");return;}HERBS=data||[];buildFilters();buildCategoryStats();renderHerbs();const cats=new Set(HERBS.map(h=>h.category).filter(Boolean));$("#heroTotal").textContent=HERBS.length;$("#heroCategories").textContent=cats.size;setStatus("Connected. Loaded "+HERBS.length+" herbs.","success");}

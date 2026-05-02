@@ -34,53 +34,71 @@ section{padding:90px 7%}.section-title{font-size:clamp(2.2rem,5vw,4rem);line-hei
 <section class="vault" id="vault"><div class="vault-head"><div><span class="badge">Live Herb Vault</span><h2 class="section-title">Start with the Top Starter Herb Cabinet</h2><p class="section-subtitle">The vault opens with a curated starter cabinet first, then lets visitors unlock the full 310-herb database. This pulls directly from Supabase table: <strong>herbs_300</strong>.</p></div><div class="vault-stats"><strong id="total">0</strong><br>Total Herbs<br><br><strong id="showing">0</strong><br>Showing Now</div></div><div class="top-herb-note"><strong>Start Here:</strong> The vault opens with a master starter cabinet so visitors do not get overwhelmed by all 310 herbs at once.</div><div class="top-herb-controls"><button class="btn btn-primary" id="showTop" type="button">Top Starter Herbs</button><button class="btn btn-secondary" id="showAll" type="button">Show All 310</button></div><div class="tools"><input id="search" placeholder="Search herbs (example: pain, digestion, immune, stress, energy...)" type="search"><select id="cat"><option value="All">All Categories</option></select><select id="part"><option value="All">All Parts</option></select><button class="btn btn-secondary" id="reset" type="button">Reset</button></div><div id="categoryStats" class="stats-grid"></div><div id="herbGrid" class="herbs"></div></section>
 <section id="learn">
   <span class="badge">Learning Hub</span>
-  <h2 class="section-title">Learn Herbs Like You Mean It</h2>
+
+  <h2 class="section-title">The Herbal Respect System</h2>
+
   <p class="section-subtitle">
-    Herbs are not random leaves in a jar. They have parts, actions, timing, preparation methods, strength levels, cautions, and purpose. Respect the plant before you use the plant.
+    This is not random herb talk. This is a clean foundation for understanding how herbs work, how to prepare them, how to respect their strength, and how to build formulas with order.
   </p>
 
-  <div class="learn-grid">
+  <div class="text-block" style="margin-bottom:28px;">
+    <h3 class="gold-text" style="font-size:1.8rem;margin-bottom:14px;">Before You Touch the Herb</h3>
+    <p>
+      Every herb has a nature, a strength, a purpose, and a caution. A real herbalist does not just ask,
+      “What is this good for?” A real herbalist asks:
+    </p>
+    <p>
+      <strong>What part is used?</strong> • <strong>How is it prepared?</strong> • <strong>Who should avoid it?</strong> •
+      <strong>What does it pair with?</strong> • <strong>What is the safest method?</strong>
+    </p>
+  </div>
 
-    <article class="learn-card">
-      <h3>1. Know the Plant Part</h3>
-      <p>Leaves, flowers, roots, bark, berries, seeds, and resins do not prepare the same way.</p>
-    </article>
+  <div class="grid-2">
 
-    <article class="learn-card">
-      <h3>2. Know the Action</h3>
-      <p>Every herb has a job: demulcent, astringent, adaptogen, expectorant, nervine, bitter, alterative, antimicrobial.</p>
-    </article>
+    <div class="text-block">
+      <h3 class="gold-text">1. Plant Parts Matter</h3>
+      <p><strong>Leaves & flowers:</strong> usually lighter and often prepared as infusions.</p>
+      <p><strong>Roots & bark:</strong> denser and often need decoction.</p>
+      <p><strong>Seeds & berries:</strong> may need crushing, simmering, syrup, or tincture.</p>
+      <p><strong>Resins & gums:</strong> often stronger and need careful preparation.</p>
+    </div>
 
-    <article class="learn-card">
-      <h3>3. Know the Preparation</h3>
-      <p>Tea is not always enough. Some herbs need decoction, tincture, infused oil, powder, or salve.</p>
-    </article>
+    <div class="text-block">
+      <h3 class="gold-text">2. Herbal Actions Matter</h3>
+      <p><strong>Demulcent:</strong> moistens and soothes tissue.</p>
+      <p><strong>Astringent:</strong> tightens and tones tissue.</p>
+      <p><strong>Nervine:</strong> supports the nervous system.</p>
+      <p><strong>Expectorant:</strong> helps move mucus and support breath.</p>
+      <p><strong>Adaptogen:</strong> helps the body respond to stress.</p>
+    </div>
 
-    <article class="learn-card">
-      <h3>4. Know the Caution</h3>
-      <p>Natural does not mean careless. Medications, pregnancy, dosage, and conditions matter.</p>
-    </article>
+    <div class="text-block">
+      <h3 class="gold-text">3. Preparation Matters</h3>
+      <p><strong>Infusion:</strong> hot water over soft plant parts.</p>
+      <p><strong>Decoction:</strong> low simmer for roots, bark, and hard parts.</p>
+      <p><strong>Tincture:</strong> concentrated extract for stronger, shelf-stable use.</p>
+      <p><strong>Infused oil:</strong> herbs pulled into oil for skin and body use.</p>
+      <p><strong>Salve:</strong> infused oil thickened for topical application.</p>
+    </div>
 
-    <article class="learn-card">
-      <h3>Infusion</h3>
-      <p>Best for leaves and flowers. Pour hot water, cover, steep, strain.</p>
-    </article>
+    <div class="text-block">
+      <h3 class="gold-text">4. Safety Matters</h3>
+      <p>Natural does not mean careless. Herbs can be powerful.</p>
+      <p>Always consider medication conflicts, pregnancy, blood pressure, blood thinning, kidney issues, liver issues, allergies, and dosage.</p>
+      <p>The stronger the herb, the more discipline it requires.</p>
+    </div>
 
-    <article class="learn-card">
-      <h3>Decoction</h3>
-      <p>Best for roots and bark. Simmer low and slow.</p>
-    </article>
+  </div>
 
-    <article class="learn-card">
-      <h3>Tincture</h3>
-      <p>Concentrated extract. Stronger and shelf-stable.</p>
-    </article>
-
-    <article class="learn-card">
-      <h3>Salve</h3>
-      <p>Oil-infused herbs thickened for skin and muscle use.</p>
-    </article>
-
+  <div class="text-block" style="margin-top:28px;">
+    <h3 class="gold-text" style="font-size:1.8rem;margin-bottom:14px;">How to Think Like a Formula Builder</h3>
+    <p><strong>Base Herb:</strong> the main herb doing the primary job.</p>
+    <p><strong>Supporting Herb:</strong> backs up the main purpose.</p>
+    <p><strong>Catalyst Herb:</strong> helps move, warm, activate, or direct the formula.</p>
+    <p><strong>Balancing Herb:</strong> softens harshness, adds moisture, or protects tissue.</p>
+    <p>
+      A strong blend is not just throwing herbs together. It is order, purpose, balance, and respect.
+    </p>
   </div>
 </section>
 <section class="cta" id="ask"><h2>Start With the Earth.</h2><p>Explore the herbs, learn the system, and stop treating your body like it came with no instruction manual.</p><form id="questionForm"><label>Name <input name="name" required></label><label>Email <input type="email" name="email" required></label><label>Phone <input name="phone"></label><label>Interest<select name="interest"><option>Raw herbs</option><option>Tea blend</option><option>Tincture</option><option>Salve / rub</option><option>Consultation</option><option>Custom blend</option></select></label><label>Message<textarea id="message" name="message" rows="6" required></textarea></label><button class="btn btn-primary" type="submit">Send Request</button><p id="formStatus" class="status"></p></form></section>

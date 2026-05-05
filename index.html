@@ -24,6 +24,16 @@ section{padding:90px 7%}.section-title{font-size:clamp(2.2rem,5vw,4rem);line-hei
 .ga-filter-buttons{display:flex;gap:10px;flex-wrap:wrap}
 .ga-chip{padding:11px 16px;border-radius:999px;border:1px solid rgba(214,168,79,.28);background:rgba(214,168,79,.08);color:var(--cream);font-weight:900;cursor:pointer}
 .ga-chip.active,.ga-chip:hover{background:var(--gold);color:#111}
+
+.today-box{background:linear-gradient(145deg,rgba(214,168,79,.12),rgba(57,79,44,.22));border:1px solid rgba(214,168,79,.28);border-radius:28px;padding:26px;margin:22px 0 32px;box-shadow:0 20px 70px rgba(0,0,0,.26)}
+.today-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-top:18px}
+.today-card{background:rgba(7,7,7,.48);border:1px solid rgba(214,168,79,.18);border-radius:20px;padding:18px}
+.today-card h3{color:var(--gold);margin-bottom:8px;font-size:1rem;text-transform:uppercase;letter-spacing:.06em}
+.today-card p{color:var(--muted);font-size:.95rem}
+.today-actions{display:flex;gap:10px;flex-wrap:wrap;margin-top:18px}
+.today-list{margin-top:16px;color:var(--muted)}
+.today-list strong{color:var(--gold)}
+@media(max-width:900px){.today-grid{grid-template-columns:1fr}}
 @media(max-width:1000px){.grid-2,.proof-grid,.herbs,.calendar-grid{grid-template-columns:1fr 1fr}.tools{grid-template-columns:1fr 1fr}.vault-head{display:block}.vault-stats{text-align:left;margin-top:20px}}@media(max-width:700px){.grid-2,.proof-grid,.herbs,.calendar-grid,.grow-grid{grid-template-columns:1fr}section{padding:70px 22px}h1{letter-spacing:-1px}.tools{grid-template-columns:1fr}.top-nav{align-items:flex-start;flex-direction:column}}
 </style>
 </head>
@@ -33,6 +43,25 @@ section{padding:90px 7%}.section-title{font-size:clamp(2.2rem,5vw,4rem);line-hei
 <section><div class="grid-2"><div class="image-card img-land"></div><div class="text-block"><h2 class="section-title">From Soil to Spirit</h2><p>This ain’t cute little herb talk. This is roots, leaves, oils, fire, smoke, sweat, and discipline.</p><p>Every plant has purpose. Every formula has intention. Every product should do more than smell good — it should serve the body.</p><p>The earth has been speaking. Most folks just forgot how to listen.</p></div></div></section>
 <section><div class="grid-2"><div class="text-block"><h2 class="section-title">I Don’t Sell Products. <span class="gold-text">I Restore People.</span></h2><p>This brand is built for people tired of quick fixes, weak products, and empty promises.</p><p>Hood Alchemist Savior is about returning to the source: herbs, oils, minerals, food, discipline, and knowledge.</p></div><div class="image-card img-herbs"></div></div></section>
 <section class="trust" id="trust"><h2 class="section-title">Real People. Real Results. <span class="gold-text">No Gimmicks.</span></h2><p class="section-subtitle">Trust is earned. Replace these with real customer reviews when ready.</p><div class="proof-grid"><div class="proof"><h3 id="proofTotal">310+</h3><p>Herbs Studied</p></div><div class="proof"><h3>Plant</h3><p>Based Approach</p></div><div class="proof"><h3>Rooted</h3><p>In Tradition</p></div><div class="proof"><h3>Built</h3><p>For Restoration</p></div></div></section>
+<section id="today" class="vault">
+  <span class="badge">Cartersville Grow Signal</span>
+  <h2 class="section-title">What to Plant Today</h2>
+  <p class="section-subtitle">This section reads today’s date, checks the Georgia growing window, estimates the moon phase, and points people toward herbs that fit the season.</p>
+  <div class="today-box">
+    <div class="today-grid">
+      <article class="today-card"><h3>Today</h3><p id="todayDate">Loading...</p></article>
+      <article class="today-card"><h3>Georgia Window</h3><p id="todaySeason">Loading...</p></article>
+      <article class="today-card"><h3>Moon Phase</h3><p id="todayMoon">Loading...</p></article>
+      <article class="today-card"><h3>Plant Energy</h3><p id="todayEnergy">Loading...</p></article>
+    </div>
+    <div class="today-list" id="todaySuggestions"><strong>Suggested herbs:</strong> Loading from your vault...</div>
+    <div class="today-actions">
+      <button class="btn btn-primary" id="todayFilter" type="button">Show Today’s Herbs</button>
+      <button class="btn btn-secondary" id="todayReset" type="button">Back to Starter Herbs</button>
+    </div>
+  </div>
+</section>
+
 <section class="vault" id="vault"><div class="vault-head"><div><span class="badge">Live Herb Vault</span><h2 class="section-title">Start with the Top Starter Herb Cabinet</h2><p class="section-subtitle">The vault opens with a curated starter cabinet first, then lets visitors unlock the full 310-herb database.</p></div><div class="vault-stats"><strong id="total">0</strong><br>Total Herbs<br><br><strong id="showing">0</strong><br>Showing Now</div></div><div class="top-herb-note"><strong>Start Here:</strong> The vault opens with a master starter cabinet so visitors do not get overwhelmed by all 310 herbs at once.</div><div class="top-herb-controls"><button class="btn btn-primary" id="showTop" type="button">Top Starter Herbs</button><button class="btn btn-secondary" id="showAll" type="button">Show All 310</button></div><div class="ga-filter-box">
   <div class="ga-filter-title">Georgia Planting Filters</div>
   <div class="ga-filter-buttons">
@@ -48,15 +77,71 @@ section{padding:90px 7%}.section-title{font-size:clamp(2.2rem,5vw,4rem);line-hei
 <section class="cta" id="ask"><h2 class="section-title">Start With the Earth.</h2><p>Explore the herbs, learn the system, and stop treating your body like it came with no instruction manual.</p><form><label>Name <input name="name"></label><label>Email <input type="email" name="email"></label><label>Message<textarea id="message" rows="6"></textarea></label></form></section>
 <footer><p>© 2026 Hood Alchemist Savior | Educational herbal content only. Not medical advice.</p></footer>
 <script>
-const SUPABASE_URL="https://bhjscvvoncakmtekwtyw.supabase.co";const SUPABASE_KEY="sb_publishable_QRd-mc4YEI9o_haMP9s6bg_YSP96CrC";const $=s=>document.querySelector(s);let HERBS=[];let activeCategory="All";let activePart="All";let showMode="top";let activeSeason="all";
+const SUPABASE_URL="https://bhjscvvoncakmtekwtyw.supabase.co";const SUPABASE_KEY="sb_publishable_QRd-mc4YEI9o_haMP9s6bg_YSP96CrC";const $=s=>document.querySelector(s);let HERBS=[];let activeCategory="All";let activePart="All";let showMode="top";let activeSeason="all";let todayMode=false;let activeSeason="all";let todayMode=false;
 const TOP_HERBS=["Alfalfa","Aloe Vera","Ashwagandha","Astragalus","Burdock Root","Calendula","Cayenne","Chamomile","Chickweed","Cinnamon","Dandelion","Echinacea","Elderberry","Garlic","Ginger","Hibiscus","Lavender","Lemon Balm","Mullein","Nettle","Oregano","Peppermint","Plantain","Turmeric","Yarrow"];
 const supa=window.supabase.createClient(SUPABASE_URL,SUPABASE_KEY);
 function esc(v){return String(v??"").replace(/[&<>"']/g,m=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[m]));}
 function tile(h){const n=h.name||"Herb";return `<div class="botanical-tile"><span class="botanical-letter">${esc(n.slice(0,1).toUpperCase())}</span><span class="botanical-name">${esc(n)}</span></div>`}
 function val(v){return v&&String(v).trim()!==""?esc(v):"Not added yet";}
 function guide(h){return `<div class="grow-grid"><div class="grow-pill"><strong>Latin</strong>${val(h.latin_name)}</div><div class="grow-pill"><strong>Sun</strong>${val(h.sun_requirements)}</div><div class="grow-pill"><strong>USDA Zones</strong>${val(h.usda_zones)}</div><div class="grow-pill"><strong>Germination</strong>${val(h.germination_time)}</div><div class="grow-pill"><strong>Harvest</strong>${val(h.harvest_time)}</div><div class="grow-pill"><strong>Height</strong>${val(h.plant_height)}</div><div class="grow-pill"><strong>Depth</strong>${val(h.planting_depth)}</div><div class="grow-pill"><strong>Life Cycle</strong>${val(h.life_cycle)}</div><div class="grow-pill"><strong>Best Season GA</strong>${val(h.best_planting_season_ga)}</div><div class="grow-pill"><strong>Georgia Notes</strong>${val(h.georgia_growing_notes)}</div></div><div class="moon-box"><strong>Moon:</strong> ${val(h.moon_phase_planting)}<br><strong>Energy:</strong> ${val(h.plant_type_energy)}</div>`}
-async function load(){const {data,error}=await supa.from("herbs_300").select("*").order("name",{ascending:true});if(error){$("#status").textContent="Supabase error: "+error.message;return;}HERBS=data||[];build();render();$("#status").textContent="Connected. Loaded "+HERBS.length+" herbs.";$("#total").textContent=HERBS.length;$("#proofTotal").textContent=HERBS.length+"+";}
+async function load(){const {data,error}=await supa.from("herbs_300").select("*").order("name",{ascending:true});if(error){$("#status").textContent="Supabase error: "+error.message;return;}HERBS=data||[];build();render();$("#status").textContent="Connected. Loaded "+HERBS.length+" herbs.";$("#total").textContent=HERBS.length;$("#proofTotal").textContent=HERBS.length+"+";updateTodayBox();updateTodayBox();}
 function build(){const cats=[...new Set(HERBS.map(h=>h.category).filter(Boolean))].sort();cats.forEach(c=>{let o=document.createElement("option");o.value=c;o.textContent=c;$("#cat").appendChild(o)});const parts=[...new Set(HERBS.map(h=>h.part_used).filter(Boolean))].sort();parts.forEach(p=>{let o=document.createElement("option");o.value=p;o.textContent=p;$("#part").appendChild(o)})}
+
+function moonPhaseInfo(date){
+  const knownNewMoon=new Date("2000-01-06T18:14:00Z").getTime();
+  const synodicMonth=29.53058867;
+  const days=(date.getTime()-knownNewMoon)/86400000;
+  const age=((days%synodicMonth)+synodicMonth)%synodicMonth;
+  if(age<1.845) return {name:"New Moon",energy:"Rest, plan, prep beds, start intention."};
+  if(age<5.536) return {name:"Waxing Crescent",energy:"Good for above-ground leafy starts."};
+  if(age<9.228) return {name:"First Quarter",energy:"Strong push for leaves, flowers, fruiting herbs."};
+  if(age<12.919) return {name:"Waxing Gibbous",energy:"Above-ground crops still favored."};
+  if(age<16.611) return {name:"Full Moon",energy:"Harvest leaves/flowers; high moisture pull."};
+  if(age<20.302) return {name:"Waning Gibbous",energy:"Shift toward roots, pruning, soil work."};
+  if(age<23.994) return {name:"Last Quarter",energy:"Roots, bulbs, underground crops, cleanup."};
+  if(age<27.685) return {name:"Waning Crescent",energy:"Rest soil, compost, prune, root work."};
+  return {name:"New Moon",energy:"Rest, plan, prep beds, start intention."};
+}
+function georgiaWindow(date){
+  const m=date.getMonth()+1;
+  if([3,4,5].includes(m)) return {season:"Spring Push",key:"spring",note:"Plant warm-season herbs after frost; hardy herbs and flowers can move strong now."};
+  if([6,7,8].includes(m)) return {season:"Summer Strength",key:"summer",note:"Heat management season: mulch, water deep, use afternoon shade for tender herbs."};
+  if([9,10,11].includes(m)) return {season:"Fall Reset",key:"fall",note:"Excellent for perennials, roots, cool-season herbs, and soil rebuilding."};
+  return {season:"Winter Planning",key:"winter",note:"Plan beds, protect tender plants, stratify seeds, and prepare spring starts."};
+}
+function todayHerbMatch(h){
+  const text=Object.values(h).join(" ").toLowerCase();
+  const moon=moonPhaseInfo(new Date()).name.toLowerCase();
+  const win=georgiaWindow(new Date());
+  const energy=String(h.plant_type_energy||"").toLowerCase();
+  const seasonMatch=text.includes(win.key)||text.includes(win.season.toLowerCase())||
+    (win.key==="spring"&&(text.includes("spring")||text.includes("after frost")))||
+    (win.key==="summer"&&(text.includes("summer")||text.includes("heat")||text.includes("warm-season")))||
+    (win.key==="fall"&&(text.includes("fall")||text.includes("late summer/fall")))||
+    (win.key==="winter"&&(text.includes("winter")||text.includes("stratify")||text.includes("protect from frost")));
+  const moonWaning=moon.includes("waning")||moon.includes("last quarter");
+  const moonWaxing=moon.includes("waxing")||moon.includes("first quarter")||moon.includes("full");
+  const moonMatch=(moonWaning&&(energy.includes("underground")||energy.includes("root")))||
+    (moonWaxing&&(energy.includes("above")||energy.includes("leaf")||energy.includes("flower")||energy.includes("fruit")))||
+    moon.includes("new");
+  return seasonMatch||moonMatch||text.includes("georgia")||text.includes("zone 8a");
+}
+function updateTodayBox(){
+  const now=new Date();
+  const moon=moonPhaseInfo(now);
+  const win=georgiaWindow(now);
+  const dateText=now.toLocaleDateString(undefined,{weekday:"long",year:"numeric",month:"long",day:"numeric"});
+  const d=document.querySelector("#todayDate"),s=document.querySelector("#todaySeason"),m=document.querySelector("#todayMoon"),e=document.querySelector("#todayEnergy"),list=document.querySelector("#todaySuggestions");
+  if(d)d.textContent=dateText;
+  if(s)s.textContent=win.season+" — "+win.note;
+  if(m)m.textContent=moon.name;
+  if(e)e.textContent=moon.energy;
+  if(list&&HERBS.length){
+    const picks=HERBS.filter(todayHerbMatch).slice(0,8).map(h=>h.name).filter(Boolean);
+    list.innerHTML="<strong>Suggested herbs:</strong> "+(picks.length?picks.join(", "):"Use the seasonal filters below.");
+  }
+}
+
 function seasonMatch(h){
 const text=Object.values(h).join(" ").toLowerCase();
 const season=String(h.best_planting_season_ga||"").toLowerCase();
@@ -69,8 +154,8 @@ if(activeSeason==="winter") return text.includes("winter")||text.includes("strat
 if(activeSeason==="zone8a") return text.includes("zone 8a")||text.includes("cartersville")||text.includes("georgia")||text.includes("zones");
 return true;
 }
-function render(){const q=($("#search").value||"").toLowerCase();let rows=HERBS.filter(h=>{const blob=Object.values(h).join(" ").toLowerCase();return(activeCategory==="All"||h.category===activeCategory)&&(activePart==="All"||h.part_used===activePart)&&seasonMatch(h)&&(!q||blob.includes(q))});if(showMode==="top"&&!q&&activeCategory==="All"&&activePart==="All"){const set=new Set(TOP_HERBS.map(x=>x.toLowerCase()));rows=HERBS.filter(h=>set.has(String(h.name).toLowerCase()))}$("#showing").textContent=rows.length;$("#herbGrid").innerHTML=rows.map(h=>`<article class="herb">${tile(h)}<span class="tag">${esc(h.category)}</span><h3>${esc(h.name)}</h3><p>${esc(h.benefits||"")}</p><details><summary>Open full herb notes</summary><p><strong>Preparation:</strong> ${esc(h.preparation||"")}</p><p><strong>Caution:</strong> ${esc(h.caution||"")}</p><h4 style="color:var(--gold);margin-top:14px">Digital Grow Guide</h4>${guide(h)}</details></article>`).join("")}
-document.addEventListener("DOMContentLoaded",()=>{$("#search").addEventListener("input",render);$("#cat").addEventListener("change",e=>{activeCategory=e.target.value;render()});$("#part").addEventListener("change",e=>{activePart=e.target.value;render()});$("#reset").addEventListener("click",()=>{$("#search").value="";$("#cat").value="All";$("#part").value="All";activeCategory="All";activePart="All";activeSeason="all";showMode="top";document.querySelectorAll(".ga-chip").forEach(b=>b.classList.remove("active"));document.querySelector('[data-season="all"]').classList.add("active");render()});$("#showTop").addEventListener("click",()=>{showMode="top";render()});$("#showAll").addEventListener("click",()=>{showMode="all";render()});document.querySelectorAll(".ga-chip").forEach(btn=>btn.addEventListener("click",()=>{document.querySelectorAll(".ga-chip").forEach(b=>b.classList.remove("active"));btn.classList.add("active");activeSeason=btn.dataset.season;showMode="all";render();}));load()})
+function render(){const q=($("#search").value||"").toLowerCase();let rows=HERBS.filter(h=>{const blob=Object.values(h).join(" ").toLowerCase();return(activeCategory==="All"||h.category===activeCategory)&&(activePart==="All"||h.part_used===activePart)&&seasonMatch(h)&&(!todayMode||todayHerbMatch(h))&&(!q||blob.includes(q))});if(showMode==="top"&&!q&&activeCategory==="All"&&activePart==="All"){const set=new Set(TOP_HERBS.map(x=>x.toLowerCase()));rows=HERBS.filter(h=>set.has(String(h.name).toLowerCase()))}$("#showing").textContent=rows.length;$("#herbGrid").innerHTML=rows.map(h=>`<article class="herb">${tile(h)}<span class="tag">${esc(h.category)}</span><h3>${esc(h.name)}</h3><p>${esc(h.benefits||"")}</p><details><summary>Open full herb notes</summary><p><strong>Preparation:</strong> ${esc(h.preparation||"")}</p><p><strong>Caution:</strong> ${esc(h.caution||"")}</p><h4 style="color:var(--gold);margin-top:14px">Digital Grow Guide</h4>${guide(h)}</details></article>`).join("")}
+document.addEventListener("DOMContentLoaded",()=>{$("#search").addEventListener("input",render);$("#cat").addEventListener("change",e=>{activeCategory=e.target.value;render()});$("#part").addEventListener("change",e=>{activePart=e.target.value;render()});$("#reset").addEventListener("click",()=>{$("#search").value="";$("#cat").value="All";$("#part").value="All";activeCategory="All";activePart="All";activeSeason="all";showMode="top";document.querySelectorAll(".ga-chip").forEach(b=>b.classList.remove("active"));document.querySelector('[data-season="all"]').classList.add("active");render()});$("#showTop").addEventListener("click",()=>{showMode="top";render()});$("#showAll").addEventListener("click",()=>{showMode="all";render()});document.querySelectorAll(".ga-chip").forEach(btn=>btn.addEventListener("click",()=>{todayMode=false;document.querySelectorAll(".ga-chip").forEach(b=>b.classList.remove("active"));btn.classList.add("active");activeSeason=btn.dataset.season;showMode="all";render();}));$("#todayFilter").addEventListener("click",()=>{todayMode=true;showMode="all";activeSeason="all";render();location.hash="vault";});$("#todayReset").addEventListener("click",()=>{todayMode=false;showMode="top";activeSeason="all";$("#search").value="";render();location.hash="vault";});load()})
 </script>
 </body>
 </html>

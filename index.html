@@ -77,7 +77,123 @@ section{padding:90px 7%}.section-title{font-size:clamp(2.2rem,5vw,4rem);line-hei
 <section class="cta" id="ask"><h2 class="section-title">Start With the Earth.</h2><p>Explore the herbs, learn the system, and stop treating your body like it came with no instruction manual.</p><form><label>Name <input name="name"></label><label>Email <input type="email" name="email"></label><label>Message<textarea id="message" rows="6"></textarea></label></form></section>
 <footer><p>© 2026 Hood Alchemist Savior | Educational herbal content only. Not medical advice.</p></footer>
 <script>
-const SUPABASE_URL="https://bhjscvvoncakmtekwtyw.supabase.co";const SUPABASE_KEY="sb_publishable_QRd-mc4YEI9o_haMP9s6bg_YSP96CrC";const $=s=>document.querySelector(s);let HERBS=[];let activeCategory="All";let activePart="All";let showMode="top";let activeSeason="all";let todayMode=false;let activeSeason="all";let todayMode=false;
+
+// ====== SUPABASE CONNECTION ======
+const SUPABASE_URL = "https://bhjscvvoncakmtekwtyw.supabase.co";
+const SUPABASE_KEY = "sb_publishable_QRd-mc4YEI9o_haMP9s6bg_YSP96CrC";
+const supa = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+
+// ====== GLOBAL STATE ======
+let HERBS = [];
+let showMode = "top";
+let todayMode = false;
+
+// ====== TOP HERBS ======
+const TOP = [
+"Alfalfa","Ashwagandha","Burdock Root","Calendula","Chamomile",
+"Dandelion","Echinacea","Elderberry","Garlic","Ginger",
+"Hibiscus","Lavender","Lemon Balm","Mullein","Nettle",
+"Oregano","Peppermint","Plantain","Turmeric","Yarrow"
+];
+
+// ====== LOAD DATA ======
+async function loadHerbs(){
+  const {data, error} = await supa.from("herbs_300").select("*");
+
+  if(error){
+    console.error(error);
+    return;
+  }
+
+  HERBS = data || [];
+  render();
+  updateTodayBox();
+}
+
+// ====== RENDER ======
+function render(){
+  let list = HERBS;
+
+  if(showMode === "top"){
+    list = HERBS.filter(h => TOP.includes(h.name));
+  }
+
+  if(todayMode){
+    list = HERBS.filter(todayMatch);
+  }
+
+  document.getElementById("herbs").innerHTML =
+    list.map(h => `
+      <div class="herb">
+        <h2>${h.name}</h2>
+        <p>${h.benefits || ""}</p>
+
+        <details>
+          <summary>Open full herb notes</summary>
+
+          <h4>Grow Guide</h4>
+          <p><b>Latin:</b> ${h.latin_name || ""}</p>
+          <p><b>Sun:</b> ${h.sun_requirements || ""}</p>
+          <p><b>Zones:</b> ${h.usda_zones || ""}</p>
+          <p><b>Harvest:</b> ${h.harvest_time || ""}</p>
+
+          <h4>Moon System</h4>
+          <p>${h.moon_phase_planting || ""}</p>
+        </details>
+      </div>
+    `).join("");
+}
+
+// ====== TODAY SYSTEM ======
+function todayMatch(h){
+  const text = JSON.stringify(h).toLowerCase();
+  const month = new Date().getMonth() + 1;
+
+  if([3,4,5].includes(month)) return text.includes("spring");
+  if([6,7,8].includes(month)) return text.includes("summer");
+  if([9,10,11].includes(month)) return text.includes("fall");
+  return text.includes("winter");
+}
+
+function updateTodayBox(){
+  const date = new Date();
+
+  const dateText = date.toLocaleDateString();
+  const month = date.getMonth() + 1;
+
+  let season = "Winter";
+  if([3,4,5].includes(month)) season = "Spring";
+  if([6,7,8].includes(month)) season = "Summer";
+  if([9,10,11].includes(month)) season = "Fall";
+
+  document.getElementById("todayDate")?.innerText = dateText;
+  document.getElementById("todaySeason")?.innerText = season;
+
+  const picks = HERBS.slice(0,8).map(h => h.name);
+  document.getElementById("todaySuggestions").innerText =
+    "Suggested: " + picks.join(", ");
+}
+
+// ====== BUTTONS ======
+document.addEventListener("DOMContentLoaded", () => {
+
+  loadHerbs();
+
+  document.getElementById("todayFilter")?.addEventListener("click", () => {
+    todayMode = true;
+    showMode = "all";
+    render();
+  });
+
+  document.getElementById("todayReset")?.addEventListener("click", () => {
+    todayMode = false;
+    showMode = "top";
+    render();
+  });
+
+});
+
+</script>const SUPABASE_URL="https://bhjscvvoncakmtekwtyw.supabase.co";const SUPABASE_KEY="sb_publishable_QRd-mc4YEI9o_haMP9s6bg_YSP96CrC";const $=s=>document.querySelector(s);let HERBS=[];let activeCategory="All";let activePart="All";let showMode="top";let activeSeason="all";let todayMode=false;let activeSeason="all";let todayMode=false;
 const TOP_HERBS=["Alfalfa","Aloe Vera","Ashwagandha","Astragalus","Burdock Root","Calendula","Cayenne","Chamomile","Chickweed","Cinnamon","Dandelion","Echinacea","Elderberry","Garlic","Ginger","Hibiscus","Lavender","Lemon Balm","Mullein","Nettle","Oregano","Peppermint","Plantain","Turmeric","Yarrow"];
 const supa=window.supabase.createClient(SUPABASE_URL,SUPABASE_KEY);
 function esc(v){return String(v??"").replace(/[&<>"']/g,m=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[m]));}

@@ -53,4 +53,30 @@ function buildFilters(){const cat=$("#cat"),part=$("#part");cat.innerHTML='<opti
 function render(){const q=($("#search")?.value||"").toLowerCase().trim();let rows=HERBS.filter(h=>{const blob=Object.values(h).join(" ").toLowerCase();return(activeCategory==="All"||h.category===activeCategory)&&(activePart==="All"||h.part_used===activePart)&&seasonMatch(h)&&(!q||blob.includes(q));});if(showMode==="top"&&!q&&activeCategory==="All"&&activePart==="All"&&activeSeason==="all"){const topSet=new Set(TOP_HERBS.map(h=>h.toLowerCase()));rows=HERBS.filter(h=>topSet.has(String(h.name||"").toLowerCase()));}$("#showing").textContent=rows.length;if(!rows.length){$("#herbGrid").innerHTML='<article class="herb empty"><h3>No herbs found</h3><p>Try another search term or reset your filters.</p></article>';return;}$("#herbGrid").innerHTML=rows.map(h=>`<article class="herb">${herbTile(h)}<span class="tag">${esc(h.category||"Herb")}</span><h3>${esc(h.name)}</h3><p>${esc(h.benefits||"")}</p><details><summary>Open full herb notes</summary><p><strong>Part/type:</strong> ${esc(h.part_used||"")}</p><p><strong>Preparation:</strong> ${esc(h.preparation||"")}</p><p><strong>Pairs with:</strong> ${esc(h.pairs_with||"")}</p><p class="small"><strong>Caution:</strong> ${esc(h.caution||"")}</p><h4 style="color:var(--gold2);margin-top:16px;">Digital Grow Guide</h4>${growGuide(h)}</details></article>`).join("");}
 document.addEventListener("DOMContentLoaded",()=>{$("#search").addEventListener("input",render);$("#cat").addEventListener("change",e=>{activeCategory=e.target.value;showMode="all";render()});$("#part").addEventListener("change",e=>{activePart=e.target.value;showMode="all";render()});$("#reset").addEventListener("click",()=>{$("#search").value="";$("#cat").value="All";$("#part").value="All";activeCategory="All";activePart="All";activeSeason="all";showMode="top";document.querySelectorAll(".chip").forEach(b=>b.classList.remove("active"));document.querySelector('[data-season="all"]').classList.add("active");render()});$("#showTop").addEventListener("click",()=>{$("#search").value="";activeCategory="All";activePart="All";activeSeason="all";showMode="top";$("#cat").value="All";$("#part").value="All";document.querySelectorAll(".chip").forEach(b=>b.classList.remove("active"));document.querySelector('[data-season="all"]').classList.add("active");render()});$("#showAll").addEventListener("click",()=>{showMode="all";render()});document.querySelectorAll(".chip").forEach(btn=>btn.addEventListener("click",()=>{document.querySelectorAll(".chip").forEach(b=>b.classList.remove("active"));btn.classList.add("active");activeSeason=btn.dataset.season;showMode="all";render()}));loadHerbs();});
 </script>
-</body></html>
+function herbTile(h){
+  const n = h.name || "Herb";
+
+  if(h.image_url && String(h.image_url).trim() !== ""){
+    return `
+      <div 
+        class="botanical-tile"
+        style="
+          background-image:
+            linear-gradient(rgba(0,0,0,.25),rgba(0,0,0,.45)),
+            url('${esc(h.image_url)}');
+          background-size:cover;
+          background-position:center;
+        "
+      >
+        <span class="botanical-name">${esc(n)}</span>
+      </div>
+    `;
+  }
+
+  return `
+    <div class="botanical-tile">
+      <span class="botanical-letter">${esc(n.slice(0,1).toUpperCase())}</span>
+      <span class="botanical-name">${esc(n)}</span>
+    </div>
+  `;
+}

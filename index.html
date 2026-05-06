@@ -45,7 +45,132 @@ const TOP_HERBS=["Alfalfa","Aloe Vera","Ashwagandha","Astragalus","Burdock Root"
 function esc(v){return String(v??"").replace(/[&<>"']/g,m=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[m]));}
 function val(v){return v&&String(v).trim()!==""?esc(v):"Not added yet";}
 function setStatus(msg,type=""){const el=$("#status");if(el){el.textContent=msg;el.className="status "+type;}}
+# Updated `herbTile()` Function (Image System Enabled)
+
+## IMPORTANT
+
+You ONLY replace the OLD `herbTile()` function INSIDE your `<script>` section.
+
+DO NOT paste this below `</script>`.
+
+---
+
+## STEP 1
+
+Find this OLD function in your `index.html`:
+
+```js
 function herbTile(h){const n=h.name||"Herb";return `<div class="botanical-tile"><span class="botanical-letter">${esc(n.slice(0,1).toUpperCase())}</span><span class="botanical-name">${esc(n)}</span></div>`;}
+```
+
+---
+
+## STEP 2
+
+DELETE that ENTIRE old function.
+
+---
+
+## STEP 3
+
+PASTE THIS NEW UPDATED VERSION:
+
+```js
+function herbTile(h){
+  const n = h.name || "Herb";
+
+  // REAL IMAGE MODE
+  if(h.image_url && String(h.image_url).trim() !== ""){
+    return `
+      <div
+        class="botanical-tile"
+        style="
+          background-image:
+            linear-gradient(rgba(0,0,0,.25), rgba(0,0,0,.45)),
+            url('${esc(h.image_url)}');
+          background-size: cover;
+          background-position: center;
+          background-repeat: no-repeat;
+        "
+      >
+        <span class="botanical-name">
+          ${esc(n)}
+        </span>
+      </div>
+    `;
+  }
+
+  // LUXURY FALLBACK MODE
+  return `
+    <div class="botanical-tile">
+      <span class="botanical-letter">
+        ${esc(n.slice(0,1).toUpperCase())}
+      </span>
+
+      <span class="botanical-name">
+        ${esc(n)}
+      </span>
+    </div>
+  `;
+}
+```
+
+---
+
+## STEP 4
+
+Save your file.
+
+---
+
+## STEP 5
+
+Commit changes to GitHub.
+
+---
+
+## STEP 6
+
+Wait for Netlify deploy.
+
+---
+
+## STEP 7
+
+Hard refresh website:
+
+### Windows:
+
+```txt
+CTRL + SHIFT + R
+```
+
+### Mac:
+
+```txt
+CMD + SHIFT + R
+```
+
+---
+
+# WHAT HAPPENS NOW
+
+## If herb HAS image_url:
+
+✅ Real herb image displays
+
+## If herb DOES NOT have image_url:
+
+✅ Luxury letter tile still shows
+
+---
+
+# CURRENT STATUS
+
+✅ Supabase connected
+✅ 310 herbs connected
+✅ image_url column connected
+✅ Hybrid luxury image system ready
 function growGuide(h){return `<div class="grow-grid"><div class="grow-pill"><strong>Latin</strong>${val(h.latin_name)}</div><div class="grow-pill"><strong>Sun</strong>${val(h.sun_requirements)}</div><div class="grow-pill"><strong>USDA Zones</strong>${val(h.usda_zones)}</div><div class="grow-pill"><strong>Germination</strong>${val(h.germination_time)}</div><div class="grow-pill"><strong>Harvest</strong>${val(h.harvest_time)}</div><div class="grow-pill"><strong>Height</strong>${val(h.plant_height)}</div><div class="grow-pill"><strong>Width</strong>${val(h.plant_width)}</div><div class="grow-pill"><strong>Depth</strong>${val(h.planting_depth)}</div><div class="grow-pill"><strong>Spacing</strong>${val(h.plant_spacing)}</div><div class="grow-pill"><strong>Life Cycle</strong>${val(h.life_cycle)}</div><div class="grow-pill"><strong>Best Season GA</strong>${val(h.best_planting_season_ga)}</div><div class="grow-pill"><strong>Georgia Notes</strong>${val(h.georgia_growing_notes)}</div></div><div class="moon-box"><strong>Moon:</strong> ${val(h.moon_phase_planting)}<br><strong>Harvest Moon:</strong> ${val(h.moon_phase_harvest)}<br><strong>Energy:</strong> ${val(h.plant_type_energy)}<br><strong>Notes:</strong> ${val(h.moon_gardening_notes)}</div>`;}
 function seasonMatch(h){if(activeSeason==="all")return true;const text=Object.values(h).join(" ").toLowerCase();const season=String(h.best_planting_season_ga||"").toLowerCase();const notes=String(h.georgia_growing_notes||"").toLowerCase();if(activeSeason==="spring")return season.includes("spring")||text.includes("early spring")||text.includes("after frost");if(activeSeason==="summer")return season.includes("summer")||notes.includes("summer")||text.includes("heat")||text.includes("warm-season");if(activeSeason==="fall")return season.includes("fall")||text.includes("early fall")||text.includes("late summer/fall");if(activeSeason==="winter")return text.includes("winter")||text.includes("stratify")||text.includes("protect from frost")||text.includes("planning");if(activeSeason==="zone8a")return text.includes("zone 8a")||text.includes("cartersville")||text.includes("georgia")||text.includes("zones");return true;}
 async function loadHerbs(){setStatus("Connecting to Supabase...");const {data,error}=await supa.from("herbs_300").select("*").order("name",{ascending:true});if(error){console.error(error);setStatus("Supabase error: "+error.message,"bad");$("#herbGrid").innerHTML=`<article class="herb empty"><h3>Supabase Error</h3><p>${esc(error.message)}</p></article>`;return;}HERBS=data||[];buildFilters();render();$("#total").textContent=HERBS.length;$("#proofTotal").textContent=HERBS.length+"+";setStatus("Connected. Loaded "+HERBS.length+" herbs.","good");}
